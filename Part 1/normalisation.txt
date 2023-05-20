@@ -1,0 +1,81 @@
+1)
+La base de donnée n'est pas normalisé car il y a des redondence.
+
+2)
+ Dépendance: 
+-Student_name avec email car dans l'email on a le nom et prénom.
+-Prefet avec House car une maison a un prefet.
+
+Forme normal non respecté:
+
+-1NF: La forme normal 1NF ne contient pas de valeurs répétitive ou de groupes de valeurs répétitives. Notre table contient de la redondance par conséquent elle ne respect pas la 1er forme.
+
+Comme la 1NF n'est pas respecter, par conséquent, la 2NF, 3NF et 4NF ne le son pas aussi. 
+
+3)
+1-Nous devons crée une entité student_name pour y mettre: ID_student, student_name et email.
+2-Nous devons crée une entité house pour y mettre: ID_house, nom_house et prefet.
+3-Pour les autres entités (registered_course et years) nous devons crée 2 entités appart pour y placer les attributs de celle-ci. 
+
+4)
+Voir looping for MCD: 
+
+5)
+MLD: voir looping 
+house = (ID_house BYTE, name_house VARCHAR(50), prefet VARCHAR(50));
+registered_course = (ID_course BYTE, name_course VARCHAR(50));
+years = (ID_year BYTE, student_year BYTE);
+student = (ID_student INT, student_name VARCHAR(255), email VARCHAR(255), #ID_house, #ID_year);
+study = (#ID_student, #ID_course);
+
+6)Pour sauvegarder sur MySQL: mysqldump -u username -p dbname > backup.sql
+
+7)
+voir script normalisation 
+
+#USE projetbdd;
+/*
+Creation des tables suivant le modéle de normalisation proposé 
+
+CREATE TABLE house(
+   ID_house INT,
+   name_house VARCHAR(50),
+   prefet VARCHAR(50),
+   PRIMARY KEY(ID_house) #Clés primaire 
+);
+
+CREATE TABLE registered_course(
+   ID_course INT,
+   name_course VARCHAR(50),
+   PRIMARY KEY(ID_course) #Clés primaire 
+);
+
+CREATE TABLE years(
+   ID_year INT,
+   student_year INT,
+   PRIMARY KEY(ID_year) #Clés primaire 
+);
+
+CREATE TABLE student(
+   ID_student INT,
+   student_name VARCHAR(255),
+   email VARCHAR(255),
+   ID_house INT NOT NULL,
+   ID_year INT NOT NULL,
+   PRIMARY KEY(ID_student), #Clés primaire 
+   UNIQUE(student_name),
+   UNIQUE(email),
+   FOREIGN KEY(ID_house) REFERENCES house(ID_house), #Clés étrangére
+   FOREIGN KEY(ID_year) REFERENCES years(ID_year) #Clés étrangére
+);
+
+CREATE TABLE study(
+   ID_student INT,
+   ID_course INT,
+   PRIMARY KEY(ID_student, ID_course), #Clés primaire 
+   FOREIGN KEY(ID_student) REFERENCES student(ID_student), #Clés étrangére
+   FOREIGN KEY(ID_course) REFERENCES registered_course(ID_course) #Clés étrangére
+);
+*/
+
+
