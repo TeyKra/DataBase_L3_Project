@@ -1,2 +1,3 @@
-# Project_BDD_L3
+# DataBase_L3_Project
+
 Advanced database project 
